@@ -47,6 +47,21 @@ The following tools have been tested, though not extensively, and did not show a
 - Gradle
 - Visual Studio Code Java Extension Pack (note: must change configurations to use Parallel GC)
 
+## Build dependencies
+
+We rely on VS 2019 and the following individual components:
+-	MSVC v142 - VS 2019 C++ ARM64 build tools (v14.26)
+-	MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.26)
+-	C++ ATL for latest v142 build tools (ARM64)
+-	C++ ATL for latest v142 build tools (x86 & x64)
+-	C++ MFC for latest v142 build tools (ARM64)
+-	C++ MFC for latest v142 build tools (x86 & x64)
+-	Windows 10 SDK (10.0.18362.0)
+
+Other dependencies are:
+-	Cygwin
+-	Java 16 for boot and build JDK 
+
 ## Feedback
 
 Please email to [aarch64-port-dev@openjdk.java.net](http://mail.openjdk.java.net/mailman/listinfo/aarch64-port-dev). 
