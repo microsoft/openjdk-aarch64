@@ -10,8 +10,8 @@ Contributions are welcome through the [OpenJDK project](https://openjdk.java.net
 
 ## Suppported Windows Versions
 
-- Windows 10 (build ###)
-- Windows Server 2016 (build ###)
+- Windows 10
+- Windows Server 2016
 
 ## Known Limitations
 
@@ -19,7 +19,7 @@ Contributions are welcome through the [OpenJDK project](https://openjdk.java.net
   - SerialGC
   - ParallelGC
 
-*ParallelGC is set as the default GC until G1GC has been fixed.*
+*ParallelGC is set as the default GC until [G1GC has been fixed](https://developercommunity.visualstudio.com/content/problem/1079221/arm64-bad-code-generation-around-signed-char-arith.html).*
 
 ### Work in Progress
 
@@ -34,9 +34,9 @@ Early Access binaries will not be TCK'ed.
 
 ### Where can I test this build?
 
-You can find retail laptops with ARM64 and Windows, such as HP Enxy x2, Asus NovaGo, and the Microsoft Surface Pro X.
+We have uploaded our Arm64 test systems information [here](https://github.com/microsoft/openjdk-aarch64/blob/master/Arm64_systems.md). You can find retail laptops with ARM64 and Windows, such as HP Enxy x2, Asus NovaGo, and the Microsoft Surface Pro X.
 
-For more information, please visit [Works on Arm](https://www.worksonarm.com/?_ga=2.204290832.1614868344.1591633956-103015898.1581534333) website.
+For additional information, please visit [Works on Arm](https://www.worksonarm.com/?_ga=2.204290832.1614868344.1591633956-103015898.1581534333) website.
 
 ### What Java tools run on this build?
 
@@ -64,6 +64,6 @@ Other dependencies are:
 
 ## Feedback
 
-Please email to [aarch64-port-dev@openjdk.java.net](http://mail.openjdk.java.net/mailman/listinfo/aarch64-port-dev). 
+Please send an email to [aarch64-port-dev@openjdk.java.net](http://mail.openjdk.java.net/mailman/listinfo/aarch64-port-dev). 
 
-Microsoft is committed to work on an *upstream first* approach, so please reach out through the mailing list above. If you do want to contact the Microsoft team directly, please email openjdk-aarch64@microsoft.com.
+Microsoft is committed to working on an *upstream first* approach, so please reach out through the mailing list above. If you do want to contact the Microsoft team directly, please email openjdk-aarch64@microsoft.com.
