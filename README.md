@@ -1,14 +1,15 @@
 OpenJDK for Windows 10 ARM64
 =====
 
-This project holds only early access binaries of the initial port of OpenJDK for Windows on ARM64 devices. 
+This project only holds early access binaries of the initial port of OpenJDK for Windows on ARM64 devices and some accompanying documentation.
 
-The source code can be found upstream on [openjdk.java.net](https://openjdk.java.net). 
-Contributions are welcome through the [OpenJDK project](https://openjdk.java.net/contribute/).
+* The source code can be found upstream on [openjdk.java.net](https://openjdk.java.net).
+* See our [Contributing Guide](CONTRIBUTING.md).  **Please note** source code contributions are welcome through the [OpenJDK project](https://openjdk.java.net/contribute/). 
+* Our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 *Early Access* binaries are available in the [releases](https://github.com/microsoft/openjdk-aarch64/releases) tab for experimentation.
 
-## Suppported Windows Versions
+## Supported Windows Versions
 
 - Windows 10
 - Windows Server 2016
@@ -64,6 +65,6 @@ Other dependencies are:
 
 ## Feedback
 
-Please send an email to [aarch64-port-dev@openjdk.java.net](http://mail.openjdk.java.net/mailman/listinfo/aarch64-port-dev). 
+Please send email to [aarch64-port-dev@openjdk.java.net](http://mail.openjdk.java.net/mailman/listinfo/aarch64-port-dev). 
 
 Microsoft is committed to working on an *upstream first* approach, so please reach out through the mailing list above. If you do want to contact the Microsoft team directly, please email openjdk-aarch64@microsoft.com.
