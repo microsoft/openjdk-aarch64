@@ -18,14 +18,10 @@ This project only holds early access binaries of the initial port of OpenJDK for
 
 - Supported Garbage Collectors
   - SerialGC
-  - ParallelGC
+  - ParallelGC*
+  - G1 GC (temporary workaround until the [MSVC bug](https://developercommunity.visualstudio.com/content/problem/1079221/arm64-bad-code-generation-around-signed-char-arith.html) has been fixed)
 
-*ParallelGC is set as the default GC until [G1GC has been fixed](https://developercommunity.visualstudio.com/content/problem/1079221/arm64-bad-code-generation-around-signed-char-arith.html).*
-
-### Work in Progress
-
-- G1GC
-- AWT/Swing
+**ParallelGC is set as the default GC*
 
 ## FAQ
 
