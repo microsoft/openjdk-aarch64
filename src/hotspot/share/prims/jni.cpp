@@ -93,10 +93,6 @@
 
 static jint CurrentVersion = JNI_VERSION_10;
 
-#if defined(_WIN32) && !defined(USE_VECTORED_EXCEPTION_HANDLING)
-extern LONG WINAPI topLevelExceptionFilter(_EXCEPTION_POINTERS* );
-#endif
-
 // The DT_RETURN_MARK macros create a scoped object to fire the dtrace
 // '-return' probe regardless of the return path is taken out of the function.
 // Methods that have multiple return paths use this to avoid having to
@@ -3703,7 +3699,7 @@ _JNI_IMPORT_OR_EXPORT_ jint JNICALL JNI_GetDefaultJavaVMInitArgs(void *args_) {
 DT_RETURN_MARK_DECL(CreateJavaVM, jint
                     , HOTSPOT_JNI_CREATEJAVAVM_RETURN(_ret_ref));
 
-static jint JNI_CreateJavaVM_inner(JavaVM **vm, void **penv, void *args) {
+_JNI_IMPORT_OR_EXPORT_ jint JNICALL JNI_CreateJavaVM(JavaVM **vm, void **penv, void *args) {
   HOTSPOT_JNI_CREATEJAVAVM_ENTRY((void **) vm, penv, args);
 
   jint result = JNI_ERR;
@@ -3838,21 +3834,6 @@ static jint JNI_CreateJavaVM_inner(JavaVM **vm, void **penv, void *args) {
 
 }
 
-_JNI_IMPORT_OR_EXPORT_ jint JNICALL JNI_CreateJavaVM(JavaVM **vm, void **penv, void *args) {
-  jint result = JNI_ERR;
-  // On Windows, let CreateJavaVM run with SEH protection
-#if defined(_WIN32) && !defined(USE_VECTORED_EXCEPTION_HANDLING)
-  __try {
-#endif
-    result = JNI_CreateJavaVM_inner(vm, penv, args);
-#if defined(_WIN32) && !defined(USE_VECTORED_EXCEPTION_HANDLING)
-  } __except(topLevelExceptionFilter((_EXCEPTION_POINTERS*)_exception_info())) {
-    // Nothing to do.
-  }
-#endif
-  return result;
-}
-
 _JNI_IMPORT_OR_EXPORT_ jint JNICALL JNI_GetCreatedJavaVMs(JavaVM **vm_buf, jsize bufLen, jsize *numVMs) {
   // See bug 4367188, the wrapper can sometimes cause VM crashes
   // JNIWrapper("GetCreatedJavaVMs");
@@ -3874,7 +3855,7 @@ extern "C" {
 DT_RETURN_MARK_DECL(DestroyJavaVM, jint
                     , HOTSPOT_JNI_DESTROYJAVAVM_RETURN(_ret_ref));
 
-static jint JNICALL jni_DestroyJavaVM_inner(JavaVM *vm) {
+jint JNICALL jni_DestroyJavaVM(JavaVM *vm) {
   HOTSPOT_JNI_DESTROYJAVAVM_ENTRY(vm);
   jint res = JNI_ERR;
   DT_RETURN_MARK(DestroyJavaVM, jint, (const jint&)res);
@@ -3908,21 +3889,6 @@ static jint JNICALL jni_DestroyJavaVM_inner(JavaVM *vm) {
     res = JNI_ERR;
     return res;
   }
-}
-
-jint JNICALL jni_DestroyJavaVM(JavaVM *vm) {
-  jint result = JNI_ERR;
-  // On Windows, we need SEH protection
-#if defined(_WIN32) && !defined(USE_VECTORED_EXCEPTION_HANDLING)
-  __try {
-#endif
-    result = jni_DestroyJavaVM_inner(vm);
-#if defined(_WIN32) && !defined(USE_VECTORED_EXCEPTION_HANDLING)
-  } __except(topLevelExceptionFilter((_EXCEPTION_POINTERS*)_exception_info())) {
-    // Nothing to do.
-  }
-#endif
-  return result;
 }
 
 static jint attach_current_thread(JavaVM *vm, void **penv, void *_args, bool daemon) {

@@ -951,13 +951,7 @@ void CodeCache::initialize() {
   }
 
   // Initialize ICache flush mechanism
-  // This service is needed for os::register_code_area
   icache_init();
-
-  // Give OS a chance to register generated code area.
-  // This is used on Windows 64 bit platforms to register
-  // Structured Exception Handlers for our generated code.
-  os::register_code_area((char*)low_bound(), (char*)high_bound());
 }
 
 void codeCache_init() {

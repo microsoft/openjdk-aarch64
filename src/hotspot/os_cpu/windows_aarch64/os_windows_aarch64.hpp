@@ -28,9 +28,4 @@
   static void setup_fpu();
   static bool supports_sse();
 
-  static bool      register_code_area(char *low, char *high) {
-    // Using Vectored Exception Handling
-    return true;
-  }
-
 #endif // OS_CPU_WINDOWS_AARCH64_OS_WINDOWS_AARCH64_HPP

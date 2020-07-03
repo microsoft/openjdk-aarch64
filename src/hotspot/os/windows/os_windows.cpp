@@ -127,13 +127,8 @@ static FILETIME process_kernel_time;
   #define __CPU__ i486
 #endif
 
-#if defined(USE_VECTORED_EXCEPTION_HANDLING)
 PVOID  topLevelVectoredExceptionHandler = NULL;
 LPTOP_LEVEL_EXCEPTION_FILTER previousUnhandledExceptionFilter = NULL;
-#elif INCLUDE_AOT
-PVOID  topLevelVectoredExceptionHandler = NULL;
-LONG WINAPI topLevelVectoredExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo);
-#endif
 
 // save DLL module handle, used by GetModuleFileName
 
@@ -153,12 +148,10 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD reason, LPVOID reserved) {
     if (ForceTimeHighResolution) {
       timeEndPeriod(1L);
     }
-#if defined(USE_VECTORED_EXCEPTION_HANDLING) || INCLUDE_AOT
     if (topLevelVectoredExceptionHandler != NULL) {
       RemoveVectoredExceptionHandler(topLevelVectoredExceptionHandler);
       topLevelVectoredExceptionHandler = NULL;
     }
-#endif
     break;
   default:
     break;
@@ -426,8 +419,6 @@ struct tm* os::gmtime_pd(const time_t* clock, struct tm* res) {
   return NULL;
 }
 
-LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo);
-
 // Thread start routine for all newly created threads
 static unsigned __stdcall thread_native_entry(Thread* thread) {
 
@@ -462,22 +453,10 @@ static unsigned __stdcall thread_native_entry(Thread* thread) {
 
   log_info(os, thread)("Thread is alive (tid: " UINTX_FORMAT ").", os::current_thread_id());
 
-#ifdef USE_VECTORED_EXCEPTION_HANDLING
   // Any exception is caught by the Vectored Exception Handler, so VM can
   // generate error dump when an exception occurred in non-Java thread
   // (e.g. VM thread).
   thread->call_run();
-#else
-  // Install a win32 structured exception handler around every thread created
-  // by VM, so VM can generate error dump when an exception occurred in non-
-  // Java thread (e.g. VM thread).
-  __try {
-    thread->call_run();
-  } __except(topLevelExceptionFilter(
-                                     (_EXCEPTION_POINTERS*)_exception_info())) {
-    // Nothing to do.
-  }
-#endif
 
   // Note: at this point the thread object may already have deleted itself.
   // Do not dereference it from here on out.
@@ -2358,7 +2337,7 @@ static inline void report_error(Thread* t, DWORD exception_code,
 }
 
 //-----------------------------------------------------------------------------
-LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
+static LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
   if (InterceptOSException) return EXCEPTION_CONTINUE_SEARCH;
   PEXCEPTION_RECORD exception_record = exceptionInfo->ExceptionRecord;
   DWORD exception_code = exception_record->ExceptionCode;
@@ -2447,10 +2426,6 @@ LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
 
       // Last unguard failed or not unguarding
       tty->print_raw_cr("Execution protection violation");
-#if !defined(USE_VECTORED_EXCEPTION_HANDLING)
-      report_error(t, exception_code, addr, exception_record,
-                   exceptionInfo->ContextRecord);
-#endif
       return EXCEPTION_CONTINUE_SEARCH;
     }
   }
@@ -2493,10 +2468,6 @@ LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
         // Fatal red zone violation.
         thread->disable_stack_red_zone();
         tty->print_raw_cr("An unrecoverable stack overflow has occurred.");
-#if !defined(USE_VECTORED_EXCEPTION_HANDLING)
-        report_error(t, exception_code, pc, exception_record,
-                      exceptionInfo->ContextRecord);
-#endif
         return EXCEPTION_CONTINUE_SEARCH;
       }
     } else if (exception_code == EXCEPTION_ACCESS_VIOLATION) {
@@ -2536,8 +2507,6 @@ LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
           address stub = SharedRuntime::continuation_for_implicit_exception(thread, pc, SharedRuntime::IMPLICIT_NULL);
           if (stub != NULL) return Handle_Exception(exceptionInfo, stub);
         }
-        report_error(t, exception_code, pc, exception_record,
-                      exceptionInfo->ContextRecord);
         return EXCEPTION_CONTINUE_SEARCH;
       }
 
@@ -2573,10 +2542,6 @@ LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
 #endif
 
       // Stack overflow or null pointer exception in native code.
-#if !defined(USE_VECTORED_EXCEPTION_HANDLING)
-      report_error(t, exception_code, pc, exception_record,
-                   exceptionInfo->ContextRecord);
-#endif
       return EXCEPTION_CONTINUE_SEARCH;
     } // /EXCEPTION_ACCESS_VIOLATION
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2631,18 +2596,10 @@ LONG WINAPI topLevelExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
 #endif
   }
 
-#if !defined(USE_VECTORED_EXCEPTION_HANDLING)
-  if (exception_code != EXCEPTION_BREAKPOINT) {
-    report_error(t, exception_code, pc, exception_record,
-                 exceptionInfo->ContextRecord);
-  }
-#endif
   return EXCEPTION_CONTINUE_SEARCH;
 }
 
-#if defined(USE_VECTORED_EXCEPTION_HANDLING) || INCLUDE_AOT
 LONG WINAPI topLevelVectoredExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
-  PEXCEPTION_RECORD exceptionRecord = exceptionInfo->ExceptionRecord;
 #if defined(_M_ARM64)
   address pc = (address) exceptionInfo->ContextRecord->Pc;
 #elif defined(_M_AMD64)
@@ -2667,9 +2624,7 @@ LONG WINAPI topLevelVectoredExceptionFilter(struct _EXCEPTION_POINTERS* exceptio
 
   return EXCEPTION_CONTINUE_SEARCH;
 }
-#endif
 
-#if defined(USE_VECTORED_EXCEPTION_HANDLING)
 LONG WINAPI topLevelUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* exceptionInfo) {
   if (InterceptOSException) goto exit;
   DWORD exception_code = exceptionInfo->ExceptionRecord->ExceptionCode;
@@ -2689,7 +2644,6 @@ LONG WINAPI topLevelUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* excepti
 exit:
   return previousUnhandledExceptionFilter ? previousUnhandledExceptionFilter(exceptionInfo) : EXCEPTION_CONTINUE_SEARCH;
 }
-#endif
 
 #ifndef _WIN64
 // Special care for fast JNI accessors.
@@ -4066,19 +4020,8 @@ jint os::init_2(void) {
   DEBUG_ONLY(os::set_mutex_init_done();)
 
   // Setup Windows Exceptions
-
-#if defined(USE_VECTORED_EXCEPTION_HANDLING)
   topLevelVectoredExceptionHandler = AddVectoredExceptionHandler(1, topLevelVectoredExceptionFilter);
   previousUnhandledExceptionFilter = SetUnhandledExceptionFilter(topLevelUnhandledExceptionFilter);
-#elif INCLUDE_AOT
-  // If AOT is enabled we need to install a vectored exception handler
-  // in order to forward implicit exceptions from code in AOT
-  // generated DLLs.  This is necessary since these DLLs are not
-  // registered for structured exceptions like codecache methods are.
-  if (AOTLibrary != NULL && (UseAOT || FLAG_IS_DEFAULT(UseAOT))) {
-    topLevelVectoredExceptionHandler = AddVectoredExceptionHandler( 1, topLevelVectoredExceptionFilter);
-  }
-#endif
 
   // for debugging float code generation bugs
   if (ForceFloatExceptions) {

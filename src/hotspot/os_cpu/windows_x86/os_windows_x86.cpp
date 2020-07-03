@@ -68,13 +68,10 @@
 #define REG_PC Eip
 #endif // AMD64
 
-extern LONG WINAPI topLevelExceptionFilter(_EXCEPTION_POINTERS* );
-
 // Install a win32 structured exception handler around thread.
 void os::os_exception_wrapper(java_call_t f, JavaValue* value, const methodHandle& method, JavaCallArguments* args, Thread* thread) {
-  __try {
-
 #ifndef AMD64
+  __try {
     // We store the current thread in this wrapperthread location
     // and determine how far away this address is from the structured
     // execption pointer that FS:[0] points to.  This get_thread
@@ -112,103 +109,11 @@ void os::os_exception_wrapper(java_call_t f, JavaValue* value, const methodHandl
 #endif // !AMD64
 
     f(value, method, args, thread);
-  } __except(topLevelExceptionFilter((_EXCEPTION_POINTERS*)_exception_info())) {
+#ifndef AMD64
+  } __except(EXCEPTION_CONTINUE_EXECUTION) {
       // Nothing to do.
   }
-}
-
-#ifdef AMD64
-
-// This is the language specific handler for exceptions
-// originating from dynamically generated code.
-// We call the standard structured exception handler
-// We only expect Continued Execution since we cannot unwind
-// from generated code.
-LONG HandleExceptionFromCodeCache(
-  IN PEXCEPTION_RECORD ExceptionRecord,
-  IN ULONG64 EstablisherFrame,
-  IN OUT PCONTEXT ContextRecord,
-  IN OUT PDISPATCHER_CONTEXT DispatcherContext) {
-  EXCEPTION_POINTERS ep;
-  LONG result;
-
-  ep.ExceptionRecord = ExceptionRecord;
-  ep.ContextRecord = ContextRecord;
-
-  result = topLevelExceptionFilter(&ep);
-
-  // We better only get a CONTINUE_EXECUTION from our handler
-  // since we don't have unwind information registered.
-
-  guarantee( result == EXCEPTION_CONTINUE_EXECUTION,
-             "Unexpected result from topLevelExceptionFilter");
-
-  return(ExceptionContinueExecution);
-}
-
-
-// Structure containing the Windows Data Structures required
-// to register our Code Cache exception handler.
-// We put these in the CodeCache since the API requires
-// all addresses in these structures are relative to the Code
-// area registered with RtlAddFunctionTable.
-typedef struct {
-  char ExceptionHandlerInstr[16];  // jmp HandleExceptionFromCodeCache
-  RUNTIME_FUNCTION rt;
-  UNWIND_INFO_EH_ONLY unw;
-} DynamicCodeData, *pDynamicCodeData;
-
-#endif // AMD64
-//
-// Register our CodeCache area with the OS so it will dispatch exceptions
-// to our topLevelExceptionFilter when we take an exception in our
-// dynamically generated code.
-//
-// Arguments:  low and high are the address of the full reserved
-// codeCache area
-//
-bool os::register_code_area(char *low, char *high) {
-#ifdef AMD64
-
-  ResourceMark rm;
-
-  pDynamicCodeData pDCD;
-  PRUNTIME_FUNCTION prt;
-  PUNWIND_INFO_EH_ONLY punwind;
-
-  BufferBlob* blob = BufferBlob::create("CodeCache Exception Handler", sizeof(DynamicCodeData));
-  CodeBuffer cb(blob);
-  MacroAssembler* masm = new MacroAssembler(&cb);
-  pDCD = (pDynamicCodeData) masm->pc();
-
-  masm->jump(ExternalAddress((address)&HandleExceptionFromCodeCache));
-  masm->flush();
-
-  // Create an Unwind Structure specifying no unwind info
-  // other than an Exception Handler
-  punwind = &pDCD->unw;
-  punwind->Version = 1;
-  punwind->Flags = UNW_FLAG_EHANDLER;
-  punwind->SizeOfProlog = 0;
-  punwind->CountOfCodes = 0;
-  punwind->FrameRegister = 0;
-  punwind->FrameOffset = 0;
-  punwind->ExceptionHandler = (char *)(&(pDCD->ExceptionHandlerInstr[0])) -
-                              (char*)low;
-  punwind->ExceptionData[0] = 0;
-
-  // This structure describes the covered dynamic code area.
-  // Addresses are relative to the beginning on the code cache area
-  prt = &pDCD->rt;
-  prt->BeginAddress = 0;
-  prt->EndAddress = (ULONG)(high - low);
-  prt->UnwindData = ((char *)punwind - low);
-
-  guarantee(RtlAddFunctionTable(prt, 1, (ULONGLONG)low),
-            "Failed to register Dynamic Code Exception Handler with RtlAddFunctionTable");
-
-#endif // AMD64
-  return true;
+#endif
 }
 
 #ifdef AMD64

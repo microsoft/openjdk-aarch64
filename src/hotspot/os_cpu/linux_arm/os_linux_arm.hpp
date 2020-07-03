@@ -36,10 +36,6 @@
 
   static bool is_allocatable(size_t bytes);
 
-  // Used to register dynamic code cache area with the OS
-  // Note: Currently only used in 64 bit Windows implementations
-  static bool register_code_area(char *low, char *high) { return true; }
-
   static int64_t (*atomic_cmpxchg_long_func)(int64_t compare_value,
                                              int64_t exchange_value,
                                              volatile int64_t *dest);
