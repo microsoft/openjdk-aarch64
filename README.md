@@ -3,11 +3,23 @@ OpenJDK for Windows 10 ARM64
 
 This project only holds early access binaries of the initial port of OpenJDK for Windows on ARM64 devices and some accompanying documentation.
 
-* The source code can be found upstream on [openjdk.java.net](https://openjdk.java.net).
 * See our [Contributing Guide](CONTRIBUTING.md).  **Please note** source code contributions are welcome through the [OpenJDK project](https://openjdk.java.net/contribute/). 
 * Our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 *Early Access* binaries are available in the [releases](https://github.com/microsoft/openjdk-aarch64/releases) tab for experimentation.
+
+## JDK Enhancement Proposal
+This port is being proposed as a JEP to the OpenJDK project. The JEP can be found at [https://openjdk.java.net/jeps/388](https://openjdk.java.net/jeps/388).
+
+This JEP is being tracked under the [JDK-8248496](https://bugs.openjdk.java.net/browse/JDK-8248496) work item.
+
+## Source Code
+All source code changes to OpenJDK, required to implement this port, are being tracked under the [JDK-8248238 Implementation of JEP: Windows AArch64 Support](https://bugs.openjdk.java.net/browse/JDK-8248238).
+
+The source code is available through Webrevs in the OpenJDK project.
+
+- Webrev P1: http://cr.openjdk.java.net/~burban/winarm64_p1_llp64/
+- Webrev P2: http://cr.openjdk.java.net/~burban/winarm64_p2_new-target/
 
 ## Supported Windows Versions
 
