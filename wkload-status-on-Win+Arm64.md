@@ -10,6 +10,7 @@
 |Java Regression Testing Framework (JTREG)| tier1s are working, enabling more tests and expanding coverage to incorporate all tests that are currently running on JDK16| o*| We are enabling more tests every week and fixing bugs as we encounter them|
 |JFC applications and applets ([demo/jfc](https://docs.oracle.com/javase/7/docs/technotes/samples/demos.html))| | o | VEH and SEH bug identified and fixed |
 |The Computer Benchmarks Game|10 Java sub-benchmarks| x|Enablement and characterization work has started |
+|[Renaissance Suite](https://renaissance.dev/)|| x|Enablement work has started |
 
 _Key to Status:_
 |Legend| Status |
