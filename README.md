@@ -69,6 +69,13 @@ Other dependencies are:
 -	Cygwin
 -	Java 16 for boot and build JDK 
 
+We recommend the using devkit, which can created like so:
+```console
+$ make/devkit/createWindowsDevkit2019.sh
+```
+
+More infos on about devkit usage can be found here: https://github.com/openjdk/jdk/blob/master/doc/building.md#cross-compiling-the-easy-way-with-openjdk-devkits
+
 ## Feedback
 
 Please send email to [aarch64-port-dev@openjdk.java.net](http://mail.openjdk.java.net/mailman/listinfo/aarch64-port-dev). 
