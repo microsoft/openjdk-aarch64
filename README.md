@@ -74,7 +74,7 @@ We recommend the using devkit, which can created like so:
 $ make/devkit/createWindowsDevkit2019.sh
 ```
 
-More infos on about devkit usage can be found here: https://github.com/openjdk/jdk/blob/master/doc/building.md#cross-compiling-the-easy-way-with-openjdk-devkits
+More infos about devkit usage can be found here: https://github.com/openjdk/jdk/blob/master/doc/building.md#cross-compiling-the-easy-way-with-openjdk-devkits
 
 ## Feedback
 
