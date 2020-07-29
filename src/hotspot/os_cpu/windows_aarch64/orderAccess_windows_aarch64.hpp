@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2005, 2017, Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2014, Red Hat Inc. All rights reserved.
+ * Copyright (c) 2020, Microsoft Corporation. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,9 +22,37 @@
  *
  */
 
-//--------------------------------------------------------
-//               FpuStackSim
-//--------------------------------------------------------
+#ifndef OS_CPU_WINDOWS_AARCH64_ORDERACCESS_WINDOWS_AARCH64_HPP
+#define OS_CPU_WINDOWS_AARCH64_ORDERACCESS_WINDOWS_AARCH64_HPP
 
-// No FPU stack on AARCH64
-#include "precompiled.hpp"
+// Included in orderAccess.hpp header file.
+
+#include <intrin.h>
+#include "vm_version_aarch64.hpp"
+#include "runtime/vm_version.hpp"
+
+// Implementation of class OrderAccess.
+
+inline void OrderAccess::loadload()   { acquire(); }
+inline void OrderAccess::storestore() { release(); }
+inline void OrderAccess::loadstore()  { acquire(); }
+inline void OrderAccess::storeload()  { fence(); }
+
+inline void OrderAccess::acquire() {
+  _ReadBarrier();
+  __dmb(_ARM64_BARRIER_ISHLD);
+}
+
+inline void OrderAccess::release() {
+  _WriteBarrier();
+  __dmb(_ARM64_BARRIER_ISHST);
+}
+
+inline void OrderAccess::fence() {
+  _ReadWriteBarrier();
+  __dmb(_ARM64_BARRIER_ISH);
+}
+
+inline void OrderAccess::cross_modify_fence() { }
+
+#endif // OS_CPU_WINDOWS_AARCH64_ORDERACCESS_WINDOWS_AARCH64_HPP
