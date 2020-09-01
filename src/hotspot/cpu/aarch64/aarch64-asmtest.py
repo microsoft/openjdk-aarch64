@@ -4,6 +4,10 @@ AARCH64_AS = "as"
 AARCH64_OBJDUMP = "objdump"
 AARCH64_OBJCOPY = "objcopy"
 
+# r18 is used for TLS on Windows ABI.
+REGS30 = [reg for reg in range(0,30) if reg != 18]
+REGS31 = REGS30 + [31]
+
 class Operand(object):
 
      def generate(self):
@@ -12,7 +16,7 @@ class Operand(object):
 class Register(Operand):
 
     def generate(self):
-        self.number = random.randint(0, 30)
+        self.number = random.choice(REGS30)
         return self
 
     def astr(self, prefix):
@@ -36,7 +40,7 @@ class GeneralRegister(Register):
 class GeneralRegisterOrZr(Register):
 
     def generate(self):
-        self.number = random.randint(0, 31)
+        self.number = random.choice(REGS31)
         return self
 
     def astr(self, prefix = ""):
@@ -53,7 +57,7 @@ class GeneralRegisterOrZr(Register):
 
 class GeneralRegisterOrSp(Register):
     def generate(self):
-        self.number = random.randint(0, 31)
+        self.number = random.choice(REGS31)
         return self
 
     def astr(self, prefix = ""):
@@ -1331,7 +1335,7 @@ generate(SpecialCases, [["ccmn",   "__ ccmn(zr, zr, 3u, Assembler::LE);",       
                         ["st1w",   "__ sve_st1w(z0, __ S, p1, Address(r0, 7));",         "st1w\t{z0.s}, p1, [x0, #7, MUL VL]"],
                         ["st1b",   "__ sve_st1b(z0, __ B, p2, Address(sp, r1));",        "st1b\t{z0.b}, p2, [sp, x1]"],
                         ["st1h",   "__ sve_st1h(z0, __ H, p3, Address(sp, r8));",        "st1h\t{z0.h}, p3, [sp, x8, LSL #1]"],
-                        ["st1d",   "__ sve_st1d(z0, __ D, p4, Address(r0, r18));",       "st1d\t{z0.d}, p4, [x0, x18, LSL #3]"],
+                        ["st1d",   "__ sve_st1d(z0, __ D, p4, Address(r0, r17));",       "st1d\t{z0.d}, p4, [x0, x17, LSL #3]"],
                         ["ldr",    "__ sve_ldr(z0, Address(sp));",                       "ldr\tz0, [sp]"],
                         ["ldr",    "__ sve_ldr(z31, Address(sp, -256));",                "ldr\tz31, [sp, #-256, MUL VL]"],
                         ["str",    "__ sve_str(z8, Address(r8, 255));",                  "str\tz8, [x8, #255, MUL VL]"],
