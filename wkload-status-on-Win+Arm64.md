@@ -11,6 +11,8 @@
 |JFC applications and applets ([demo/jfc](https://docs.oracle.com/javase/7/docs/technotes/samples/demos.html))| | o | VEH and SEH bug identified and fixed |
 |The Computer Benchmarks Game|10 Java sub-benchmarks| x|Enablement and characterization work has started |
 |[Renaissance Suite](https://renaissance.dev/)|| x|Enablement work has started |
+|VSCode| | o | |
+|Minecraft Server| | o | |
 
 _Key to Status:_
 |Legend| Status |
