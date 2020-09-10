@@ -26,12 +26,12 @@ The source code is available through Webrevs in the OpenJDK project.
 - Windows 10
 - Windows Server 2016
 
-## Known Limitations
-
-- Supported Garbage Collectors
-  - SerialGC
-  - ParallelGC
-  - G1 GC (temporary workaround until the [MSVC bug](https://developercommunity.visualstudio.com/content/problem/1079221/arm64-bad-code-generation-around-signed-char-arith.html) has been fixed)
+## Supported Garbage Collectors
+- Serial GC
+- Parallel GC
+- G1 GC (temporary workaround until the [MSVC bug](https://developercommunity.visualstudio.com/content/problem/1079221/arm64-bad-code-generation-around-signed-char-arith.html) has been fixed)
+- Z GC
+- Shenandoah GC
 
 ## FAQ
 
