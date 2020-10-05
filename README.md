@@ -69,7 +69,7 @@ Other dependencies are:
 -	Cygwin
 -	Java 16 for boot and build JDK 
 
-We recommend the using devkit, which can created like so:
+We recommend using tge devkit, which can be created like so:
 ```console
 $ make/devkit/createWindowsDevkit2019.sh
 ```
