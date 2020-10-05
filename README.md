@@ -75,6 +75,9 @@ $ make/devkit/createWindowsDevkit2019.sh
 ```
 
 More infos about devkit usage can be found here: https://github.com/openjdk/jdk/blob/master/doc/building.md#cross-compiling-the-easy-way-with-openjdk-devkits
+### Building from github.com/openjdk/jdk.git
+
+Platform support has been merged recently, but there is still a [build system issue](https://github.com/openjdk/jdk/pull/212#issuecomment-695024586). You'll need to apply this patch to make the build work: https://gist.github.com/lewurm/c099a4b5fcd8a182510cbdeebcb41f77
 
 ## Feedback
 
