@@ -29,7 +29,7 @@ The source code is available through Webrevs in the OpenJDK project.
 ## Supported Garbage Collectors
 - Serial GC
 - Parallel GC
-- G1 GC (temporary workaround until the [MSVC bug](https://developercommunity.visualstudio.com/content/problem/1079221/arm64-bad-code-generation-around-signed-char-arith.html) has been fixed)
+- G1 GC
 - Z GC
 - Shenandoah GC
 
@@ -52,7 +52,7 @@ The following tools have been tested, though not extensively, and did not show a
 - Apache Maven
 - Apache Ant
 - Gradle
-- Visual Studio Code Java Extension Pack (note: must change configurations to use Parallel GC)
+- Visual Studio Code Java Extension Pack
 
 ## Build dependencies
 
@@ -69,15 +69,13 @@ Other dependencies are:
 -	Cygwin
 -	Java 16 for boot and build JDK 
 
-We recommend using the devkit, which can be created like so:
-```console
-$ make/devkit/createWindowsDevkit2019.sh
-```
-
-More infos about devkit usage can be found here: https://github.com/openjdk/jdk/blob/master/doc/building.md#cross-compiling-the-easy-way-with-openjdk-devkits
 ### Building from github.com/openjdk/jdk.git
 
-Platform support has been merged recently, but there is still a [build system issue](https://github.com/openjdk/jdk/pull/212#issuecomment-695024586). You'll need to apply this patch to make the build work: https://gist.github.com/lewurm/c099a4b5fcd8a182510cbdeebcb41f77
+```shell
+$ bash configure
+          --openjdk-target=aarch64-unknown-cygwin
+          --with-boot-jdk=<path-to-x86_64-JDK>
+```
 
 ## Feedback
 
