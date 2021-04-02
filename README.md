@@ -9,17 +9,14 @@ This project only holds early access binaries of the initial port of OpenJDK for
 *Early Access* binaries are available in the [releases](https://github.com/microsoft/openjdk-aarch64/releases) tab for experimentation.
 
 ## JDK Enhancement Proposal
-This port is being proposed as a JEP to the OpenJDK project. The JEP can be found at [https://openjdk.java.net/jeps/388](https://openjdk.java.net/jeps/388).
+The JEP can be found at [https://openjdk.java.net/jeps/388](https://openjdk.java.net/jeps/388).
 
-This JEP is being tracked under the [JDK-8248496](https://bugs.openjdk.java.net/browse/JDK-8248496) work item.
+This JEP was tracked under the [JDK-8248496](https://bugs.openjdk.java.net/browse/JDK-8248496) work item and has been delivered in JDK 16.
 
 ## Source Code
-All source code changes to OpenJDK, required to implement this port, are being tracked under the [JDK-8248238 Implementation of JEP: Windows AArch64 Support](https://bugs.openjdk.java.net/browse/JDK-8248238).
+All source code changes to OpenJDK, that were required to implement this port, were being tracked under [JDK-8248238 Implementation of JEP: Windows AArch64 Support](https://bugs.openjdk.java.net/browse/JDK-8248238).
 
-The source code is available through Webrevs in the OpenJDK project.
-
-- Webrev P1: http://cr.openjdk.java.net/~burban/winarm64_p1_llp64/
-- Webrev P2: http://cr.openjdk.java.net/~burban/winarm64_p2_new-target/
+The source code is merged into JDK 16 and is now a part of the [OpenJDK project](https://github.com/openjdk/jdk)
 
 ## Supported Windows Versions
 
