@@ -16,7 +16,9 @@ This JEP was tracked under the [JDK-8248496](https://bugs.openjdk.java.net/brows
 ## Source Code
 All source code changes to OpenJDK, that were required to implement this port, were being tracked under [JDK-8248238 Implementation of JEP: Windows AArch64 Support](https://bugs.openjdk.java.net/browse/JDK-8248238).
 
-The source code is merged into JDK 16 and is now a part of the [OpenJDK project](https://github.com/openjdk/jdk)
+The source code is merged into JDK 16 and is now a part of the [OpenJDK project](https://github.com/openjdk/jdk). 
+Here's a [link to the source code for our JDK 16u EA build](https://download.visualstudio.microsoft.com/download/pr/df5d5fd6-decb-4eea-8c08-895c5b088439/edb7b06196fae4471a3c241e092f2eda/jdk16u.tar.gz).
+
 
 ## Supported Windows Versions
 
