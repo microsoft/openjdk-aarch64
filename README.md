@@ -75,6 +75,28 @@ $ bash configure
           --openjdk-target=aarch64-unknown-cygwin
           --with-boot-jdk=<path-to-x86_64-JDK>
 ```
+### Build from JDK11
+
+(Note that the backport is not merged yet, a branch exists here: https://github.com/openjdk/jdk11u/pull/2 )
+
+Configure this way:
+```
+$ DEVKIT="/cygdrive/c/work/VS2019-16.6.1-devkit" \
+    BOOTJDK="/cygdrive/c/work/jdk_x64_windows/jdk-11.0.10+8" \
+     bash configure \
+    --openjdk-target=aarch64-unknown-cygwin \  
+    --with-devkit="$DEVKIT" \  
+    --with-build-devkit="$DEVKIT" \  
+    --with-build-jdk=$BOOTJDK \  
+    --with-boot-jdk=$BOOTJDK
+```
+
+Note that:
+* Usage of a devkit is required. Must be created from a VS2019 installation. The jdk11u repository only contains a script for VS2017, so one from e.g. jdk16u has to be used: https://github.com/openjdk/jdk16u/blob/master/make/devkit/createWindowsDevkit2019.sh
+* Both `build-jdk` _and_ `boot-jdk` must be specified.
+* Build must happen on a `x86_64` machine.
+* If you want to enable ShenandoahGC in this build, you have to explicitly enable it via: `--with-jvm-features=shenandoahgc`.
+
 
 ## Feedback
 
