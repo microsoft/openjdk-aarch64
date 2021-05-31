@@ -97,6 +97,9 @@ Note that:
 * Build must happen on a `x86_64` machine.
 * If you want to enable ShenandoahGC in this build, you have to explicitly enable it via: `--with-jvm-features=shenandoahgc`.
 
+#### Why is this more complicated than on >= jdk16u?
+
+Because the WINENV patch has not been backported which adds proper cross-compilation for Windows: https://github.com/openjdk/jdk/pull/1597
 
 ## Feedback
 
