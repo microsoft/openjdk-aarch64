@@ -75,7 +75,7 @@ $ bash configure
           --openjdk-target=aarch64-unknown-cygwin
           --with-boot-jdk=<path-to-x86_64-JDK>
 ```
-### Build from JDK11
+### Building JDK11
 
 (Note that the backport is not merged yet, a branch exists here: https://github.com/openjdk/jdk11u/pull/2 )
 
