@@ -27,7 +27,7 @@ ____________________________________________________________
 | jtreg:test/langtools:tier2 | 11  |  11  |  0  |  0 | 
 ____________________________________________________________
 ____________________________________________________________
-### Windows-x86-64 with refractored P1
+### Windows-x86-64 with refactored P1
 |Tests|Total  |Pass  | Fail | Error  |
 |--|--|--|--|--|
 |jtreg:test/hotspot/jtreg:tier1   | 1625 | 1567|  58 |  0 | 
@@ -36,7 +36,7 @@ ____________________________________________________________
 |jtreg:test/langtools:tier1|  4065| 4063|  2 |  0 | 
 |jtreg:test/langtools:tier2|  12 | 12 |  0 |  0|  
 
-### Windows-x86-64 with refractored P1 + P2
+### Windows-x86-64 with refactored P1 + P2
 |Tests|Total  |Pass  | Fail | Error  |
 |--|--|--|--|--|
 |jtreg:test/hotspot/jtreg:tier1  | 1625 | 1567 | 58 |  0 |
