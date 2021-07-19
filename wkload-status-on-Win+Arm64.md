@@ -7,9 +7,9 @@
 | DaCapo Benchmark | avrora fop h2 jython luindex lusearch lusearch-fix pmd sunflow tomcat xalan  | o* | one benchmark utilizes an x86-64 dll. A few others don't work on JDK8+. Lower priority |
 | Scimark2 |  |o  |  | 
 |Java MicroBenchmark Harness (JMH) | many microbenchmarks used for performance and implementation testing | o* | we ran the 'jmh-jdk-microbenchmarks' suite on our [test platforms](https://github.com/microsoft/openjdk-aarch64/blob/master/Arm64_systems.md) and found no significant issues |
-|Java Regression Testing Framework (JTREG)| tier1s are working, enabling more tests and expanding coverage to incorporate all tests that are currently running on JDK16| o*| We are enabling more tests every week and fixing bugs as we encounter them|
+|Java Regression Testing Framework (JTREG)| | o*| part of our CI|
 |JFC applications and applets ([demo/jfc](https://docs.oracle.com/javase/7/docs/technotes/samples/demos.html))| | o | VEH and SEH bug identified and fixed |
-|The Computer Benchmarks Game|10 Java sub-benchmarks| x|Enablement and characterization work has started |
+|The Computer Benchmarks Game|10 Java sub-benchmarks| x|Enablement and characterization work|
 |[Renaissance Suite](https://renaissance.dev/)|| x|Enablement work has started |
 |VSCode| | o | |
 |Minecraft Server| | o | |
