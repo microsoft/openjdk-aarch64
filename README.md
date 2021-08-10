@@ -94,7 +94,7 @@ $ bash configure \
 ```
 
 Note that:
-* Devkit is required and must be created from a VS 2019 installation. The jdk11u repository only contains a script for VS 2017, so [one from e.g. jdk16u](https://github.com/openjdk/jdk16u/blob/master/make/devkit/createWindowsDevkit2019.sh) has to be used.
+* Devkit is required and must be created from a VS 2019 installation using the [make/devkit/createWindowsDevkit2019.sh](https://github.com/openjdk/jdk11u-dev/blob/master/make/devkit/createWindowsDevkit2019.sh) script.
 * Both `build-jdk` _and_ `boot-jdk` must be specified.
 * Since we are cross-compiling, the build must happen on a `x86_64` machine with the `--openjdk-target=aarch64-unknown-cygwin` specified as shown above.
 * If you want to enable Shenandoah GC in this build, you have to explicitly enable it via: `--with-jvm-features=shenandoahgc`.
