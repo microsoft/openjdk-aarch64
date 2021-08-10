@@ -1,7 +1,7 @@
 OpenJDK for Windows 10 ARM64
 =====
 
-This project holds binaries and documentation about the initial port of OpenJDK for Windows on ARM64 devices, as well as ARM64 binaries built by Microsoft for all operating systems supported by the OpenJDK project.
+This project holds binaries and documentation for Microsoft's port of OpenJDK for Windows on Arm64 devices, as well as Arm64 binaries built by Microsoft for all operating systems supported by the OpenJDK project.
 
 * See our [Contributing Guide](CONTRIBUTING.md).  **Please note** source code contributions are welcome through the [OpenJDK project](https://openjdk.java.net/contribute/). 
 * Our [Code of Conduct](CODE_OF_CONDUCT.md).
@@ -11,13 +11,13 @@ General Access (GA) binaries are available under the [releases](https://github.c
 ### JDK Enhancement Proposal
 The JEP can be found at [https://openjdk.java.net/jeps/388](https://openjdk.java.net/jeps/388).
 
-This JEP was tracked under the [JDK-8248496](https://bugs.openjdk.java.net/browse/JDK-8248496) work item and has been delivered in JDK 16.
+This JEP was tracked under the [JDK-8248496](https://bugs.openjdk.java.net/browse/JDK-8248496) work item and they have been delivered in OpenJDK JDK16.
 
 ### Source Code
 All source code changes to OpenJDK, that were required to implement this port, were being tracked under [JDK-8248238 Implementation of JEP: Windows AArch64 Support](https://bugs.openjdk.java.net/browse/JDK-8248238).
 
 The source code is merged into JDK 16 and is now a part of the [OpenJDK project](https://github.com/openjdk/jdk). 
-Here's a [link to the source code for our JDK 16u EA build](https://download.visualstudio.microsoft.com/download/pr/df5d5fd6-decb-4eea-8c08-895c5b088439/edb7b06196fae4471a3c241e092f2eda/jdk16u.tar.gz).
+Here's a [link to the source code for Microsoft's GA build of OpenJDK 16.0.2](https://download.visualstudio.microsoft.com/download/pr/b0e444d2-a821-428a-b1b2-b751a23634fe/db10bf0638fa2bea3f88a8b654c7fa6a/jdk16.0.2.7.tar.gz).
 
 
 ### Supported Windows Versions
@@ -94,20 +94,20 @@ $ bash configure \
 ```
 
 Note that:
-* Usage of a devkit is required. Must be created from a VS 2019 installation. The jdk11u repository only contains a script for VS 2017, so [one from e.g. jdk16u](https://github.com/openjdk/jdk16u/blob/master/make/devkit/createWindowsDevkit2019.sh) has to be used.
+* Devkit is required and must be created from a VS 2019 installation. The jdk11u repository only contains a script for VS 2017, so [one from e.g. jdk16u](https://github.com/openjdk/jdk16u/blob/master/make/devkit/createWindowsDevkit2019.sh) has to be used.
 * Both `build-jdk` _and_ `boot-jdk` must be specified.
-* Build must happen on a `x86_64` machine.
-* If you want to enable ShenandoahGC in this build, you have to explicitly enable it via: `--with-jvm-features=shenandoahgc`.
-* The [fixpath binary](https://github.com/microsoft/openjdk-aarch64/releases/tag/fp-1.0) available under the releases tab has to be placed at the root of the source tree.
+* Since we are cross-compiling, the build must happen on a `x86_64` machine with the `--openjdk-target=aarch64-unknown-cygwin` specified as shown above.
+* If you want to enable Shenandoah GC in this build, you have to explicitly enable it via: `--with-jvm-features=shenandoahgc`.
+* The Arm64 flavor of the [fixpath binary](https://github.com/microsoft/openjdk-aarch64/releases/tag/fp-1.0) is available under the releases tab and has to be placed at the root of the source tree.
 
 ##### Why is this more complicated than on >= jdk16u?
 
-The [WINENV patch](https://github.com/openjdk/jdk/pull/1597) that adds proper cross-compilation support for Windows has not been backported to JDK 11.
+The [WINENV patch](https://github.com/openjdk/jdk/pull/1597) that automatically supports the cross-compilation environment for Windows has not been backported to JDK 11u.
 
 
 ### OpenJDK binaries built by Microsoft for ARM64 devices
 
-General Access (GA) ARM64 binaries are available for the following operating systems under the [releases](https://github.com/microsoft/openjdk-aarch64/releases) tab:
+General Access (GA) Arm64 binaries are available for the following operating systems under the [releases](https://github.com/microsoft/openjdk-aarch64/releases) tab:
 
 
 |        | Linux | Windows | MacOS |
