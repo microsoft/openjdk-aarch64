@@ -94,7 +94,7 @@ $ bash configure \
 ```
 
 Note that:
-* Devkit is required and must be created from a VS 2019 installation using the [make/devkit/createWindowsDevkit2019.sh](https://github.com/openjdk/jdk11u-dev/blob/master/make/devkit/createWindowsDevkit2019.sh) script.
+* Devkit is required and must be created from a VS 2019 installation using the [createWindowsDevkit2019.sh](https://github.com/openjdk/jdk11u-dev/blob/master/make/devkit/createWindowsDevkit2019.sh) script. Please note that this file is not present in the JDK 11.0.12 sources (available from 11.0.13), it needs to be downloaded separately. This will no longer be necessary once the port is upstreamed.
 * Both `build-jdk` _and_ `boot-jdk` must be specified.
 * Since we are cross-compiling, the build must happen on a `x86_64` machine with the `--openjdk-target=aarch64-unknown-cygwin` specified as shown above.
 * If you want to enable Shenandoah GC in this build, you have to explicitly enable it via: `--with-jvm-features=shenandoahgc`.
