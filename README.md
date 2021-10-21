@@ -123,4 +123,4 @@ General Access (GA) Arm64 binaries are available for the following operating sys
 
 - Microsoft is committed to working on an *upstream first* approach, so for port related questions, please reach out through the [aarch64-port-dev@openjdk.java.net](http://mail.openjdk.java.net/mailman/listinfo/aarch64-port-dev) mailing list. If you do want to contact the Microsoft team directly, please email openjdk-aarch64@microsoft.com
 
-- To provide feedback or to report issues regarding Microsoft's Build of OpenJDK, please reach out to us @github.com/microsoft/OpenJDK. Thank you.
+- To provide feedback or to report issues regarding Microsoft's Build of OpenJDK, please reach out to us @[github.com/microsoft/OpenJDK](https://github.com/microsoft/OpenJDK). Thank you.
