@@ -15,13 +15,12 @@ A number of older builds can be found under the [releases](https://github.com/mi
 ### JDK Enhancement Proposal
 The JEP can be found at [https://openjdk.java.net/jeps/388](https://openjdk.java.net/jeps/388).
 
-The work was tracked under the [JDK-8248496](https://bugs.openjdk.java.net/browse/JDK-8248496) item and has been delivered in OpenJDK 16.
-
+The work was tracked under the [JDK-8248496](https://bugs.openjdk.java.net/browse/JDK-8248496) item and has been delivered in OpenJDK 16. The work was later backported to JDK 11.
 
 ### Source Code
 Source code changes required to implement this port were tracked under [JDK-8248238](https://bugs.openjdk.java.net/browse/JDK-8248238).
 
-The port was merged into OpenJDK 16 and since then has been part of the [OpenJDK mainline](https://github.com/openjdk/jdk).
+The port was merged into OpenJDK 16 and since then has been part of the [OpenJDK mainline](https://github.com/openjdk/jdk). Like previously stated, the port was later backported to JDK 11.
 
 
 ### Supported Windows Versions
@@ -58,11 +57,11 @@ The following tools have been tested, though not extensively, and did not show a
 
 ## Building the JDK for Windows ARM64
 
-Until the native Visual Studio build toolset for ARM64 becomes available, the JDK is cross-compiled for Windows ARM64. This means that the build happens on an x64/x86 machine, but the resulting binaries run on ARM64.
+The native Visual Studio build toolset for ARM64 has become available in Visual Studio 2022 17.3 Preview2 (as of June 2022). To find out more information on how to setup this version of Visual Studio please visit the [Microsoft Docs](https://docs.microsoft.com/en-us/visualstudio/install/visual-studio-on-arm-devices?view=vs-2022). For those not using the native Visual Studio build toolset for ARM64, the JDK can be cross-compiled for Windows ARM64. This means that the build happens on an x64/x86 machine, but the resulting binaries run on ARM64.
 
 ### Dependencies
 
-We recommend using the latest version of Visual Studio available, preferably VS 2019 16.8 or later. Older VS 2019 versions work but have known code generation bugs. The following individual components are needed (with example versions):
+We recommend using the latest version of Visual Studio available. At a minimmum VS 2019 (16.8) is required. The following individual components are needed (with example versions):
 -	MSVC v143 - VS 2022 C++ ARM64 build tools (Latest)
 -	MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
 -	C++ ATL for latest v143 build tools (ARM64)
@@ -75,7 +74,7 @@ Other dependencies are:
 -	Cygwin
 -	Boot and build JDK:
     - To build JDK 11 for ARM64, x86/x64 JDK 11 binaries are needed.
-    - To build the latest JDK for ARM64, x86/x64 binaries of one of the latest 3 JDK versions are needed. At the time of writing (Feb 2022) one can use either JDK 17, 18 or 19 (not yet released).
+    - To build the latest JDK for ARM64, x86/x64 binaries of one of the latest 3 JDK versions are needed. At the time of writing (June 2022) one can use either JDK 17, 18 or 19 (not yet released).
     - These binaries can be obtained from any vendor.
 
 ### Building the latest JDK
