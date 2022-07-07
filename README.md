@@ -61,7 +61,7 @@ The native Visual Studio build toolset for ARM64 has become available in Visual 
 
 ### Dependencies
 
-We recommend using the latest version of Visual Studio available. At a minimmum VS 2019 (16.8) is required. The following individual components are needed (with example versions):
+We recommend using the latest version of Visual Studio available. At a minimum VS 2019 (16.8) is required. The following individual components are needed (with example versions):
 -	MSVC v143 - VS 2022 C++ ARM64 build tools (Latest)
 -	MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
 -	C++ ATL for latest v143 build tools (ARM64)
